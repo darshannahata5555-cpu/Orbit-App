@@ -202,26 +202,6 @@ function HodHome() {
         </div>
       </section>
 
-      <section className="space-y-3">
-        <div className="flex items-end justify-between">
-          <div>
-            <h2 className="text-xl font-semibold">Today&apos;s Department Work</h2>
-            <p className="text-sm text-neutral-600">Tasks owned by your team</p>
-          </div>
-          <button className="text-sm font-semibold text-neutral-600">View tasks</button>
-        </div>
-        <div className="space-y-2">
-          {(departmentTasks.length ? departmentTasks : tasks.slice(0, 3)).slice(0, 3).map((task) => (
-            <button key={task.id} className="w-full rounded-[18px] bg-white p-3 text-left shadow-sm">
-              <div className="flex items-center justify-between gap-3">
-                <p className="truncate font-semibold">{task.title}</p>
-                <span className="rounded-full bg-[#D8D8D6] px-2.5 py-1 text-xs font-semibold">{task.priority}</span>
-              </div>
-              <p className="mt-1 text-sm text-neutral-600">{task.assignee} - Due {task.dueDate}</p>
-            </button>
-          ))}
-        </div>
-      </section>
     </section>
   );
 }
