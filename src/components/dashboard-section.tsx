@@ -185,11 +185,11 @@ function HodHome() {
           <MessageCircle className="h-5 w-5" />
           <h2 className="text-xl font-semibold">DMs</h2>
         </div>
-        <div className="scrollbar-none flex gap-2 overflow-x-auto pb-1">
+        <div className="grid grid-cols-3 gap-2">
           {departmentDms.map((name) => (
-            <button key={name} className="min-w-[132px] rounded-[16px] bg-white p-3 text-left shadow-sm">
+            <button key={name} className="min-w-0 rounded-[16px] bg-white p-3 text-left shadow-sm">
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#D8D8D6] text-xs font-semibold">{name.split(" ").map((part) => part[0]).join("")}</span>
-              <span className="mt-3 block text-sm font-semibold">{name}</span>
+              <span className="mt-3 block truncate text-sm font-semibold">{name}</span>
             </button>
           ))}
         </div>
