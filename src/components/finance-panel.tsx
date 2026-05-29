@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight, CheckCircle2, Clock3, IndianRupee, Plus, ReceiptText } from "lucide-react";
+import { CheckCircle2, Clock3, IndianRupee, Plus, ReceiptText } from "lucide-react";
 import { reimbursements, supportStats, tasks } from "@/lib/mock-data";
 import { useAppStore } from "@/store/useAppStore";
 
@@ -18,18 +18,18 @@ export function FinancePanel() {
       <div className="grid grid-cols-2 gap-4">
         <div className="min-h-[142px] rounded-[18px] bg-[#111111] p-5 text-white shadow-[0_18px_45px_-32px_rgba(17,17,17,0.8)] sm:min-h-[170px]">
           <div className="flex items-center justify-between">
-            <p className="text-sm text-white/70">Today</p>
-            <ArrowUpRight className="h-5 w-5" />
+            <p className="text-sm text-white/70">Allocated Budget</p>
+            <IndianRupee className="h-5 w-5" />
           </div>
-          <p className="mt-8 text-4xl font-semibold">{supportStats.totalTasks}</p>
-          <p className="mt-1 text-sm text-white/70">active tasks</p>
+          <p className="mt-8 text-4xl font-semibold">₹35K</p>
+          <p className="mt-1 text-sm text-white/70">total approved</p>
         </div>
         <div className="min-h-[142px] rounded-[18px] bg-[#E9E2D0] p-5 text-[#111111] shadow-[0_18px_45px_-35px_rgba(17,17,17,0.55)] sm:min-h-[170px]">
           <div className="flex items-center justify-between">
-            <p className="text-sm text-neutral-600">Budget</p>
+            <p className="text-sm text-neutral-600">Remaining Budget</p>
             <IndianRupee className="h-5 w-5" />
           </div>
-          <p className="mt-8 text-4xl font-semibold">$18.2K</p>
+          <p className="mt-8 text-4xl font-semibold">{supportStats.remainingBudget}</p>
           <p className="mt-1 text-sm text-neutral-600">remaining</p>
         </div>
       </div>

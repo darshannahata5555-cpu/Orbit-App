@@ -218,7 +218,7 @@ export const reimbursements: Reimbursement[] = [
   {
     id: "R-045",
     vendor: "Campus Cafe",
-    amount: "$840",
+    amount: "₹840",
     submittedBy: "Ryan Lee",
     department: "PR",
     status: "Pending",
@@ -229,7 +229,7 @@ export const reimbursements: Reimbursement[] = [
   {
     id: "R-046",
     vendor: "StageLight Co.",
-    amount: "$2,940",
+    amount: "₹2,940",
     submittedBy: "Ava Roy",
     department: "Tech",
     status: "Pending",
@@ -240,7 +240,7 @@ export const reimbursements: Reimbursement[] = [
   {
     id: "R-037",
     vendor: "Print Lab",
-    amount: "$540",
+    amount: "₹540",
     submittedBy: "Nina Patel",
     department: "Creative",
     status: "Approved",
@@ -280,7 +280,7 @@ export const channels: Channel[] = [
     pinned: ["Stage lighting invoice requires escalation.", "Vendor terms pending security signoff."],
     participants: ["Milan Shah", "Ava Roy"],
     messages: [
-      { id: "m4", author: "Milan Shah", content: "We need final approval for the $2,940 stage payment.", time: "8:55 AM", reactions: ["⚠️"] },
+      { id: "m4", author: "Milan Shah", content: "We need final approval for the ₹2,940 stage payment.", time: "8:55 AM", reactions: ["⚠️"] },
       { id: "m5", author: "Ava Roy", content: "The technical brief is complete. Hold payment until the rigging plan is finalized.", time: "9:03 AM" },
     ],
   },
@@ -336,6 +336,6 @@ export const supportStats = {
   totalTasks: 46,
   completedTasks: 18,
   pendingReimbursements: 7,
-  remainingBudget: "$18.2K",
+  remainingBudget: "₹18.2K",
   activeThreads: 12,
 };

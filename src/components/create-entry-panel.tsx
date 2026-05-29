@@ -15,7 +15,7 @@ export function CreateEntryPanel() {
           </label>
           <label className="space-y-2">
             <span className="text-sm text-neutral-500">Amount</span>
-            <input className="w-full rounded-[16px] bg-[#F0F0ED] px-4 py-3 outline-none" placeholder="Rs 0" />
+            <input className="w-full rounded-[16px] bg-[#F0F0ED] px-4 py-3 outline-none" placeholder="₹0" />
           </label>
           <label className="space-y-2">
             <span className="text-sm text-neutral-500">Department</span>
