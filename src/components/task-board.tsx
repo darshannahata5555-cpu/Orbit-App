@@ -24,28 +24,29 @@ const priorityStyles = {
 export function TaskBoard() {
   const [tab, setTab] = useState<(typeof tabs)[number]>("My Tasks");
   const role = useAppStore((state) => state.role);
-  const activeDepartment = useAppStore((state) => state.activeDepartment);
+  const assignedDepartment = useAppStore((state) => state.assignedDepartment);
   const isDepartmentView = role === "HOD" || role === "Core Member" || role === "Member";
+  const departmentLabel = assignedDepartment === "Creative" ? "Creatives" : assignedDepartment === "Ops" ? "Operations" : assignedDepartment;
 
   const groups = useMemo(() => {
     const scopedTasks = isDepartmentView
-      ? tasks.filter((task) => task.department === activeDepartment || (activeDepartment === "Ops" && task.department === "Operations"))
+      ? tasks.filter((task) => task.department === assignedDepartment || (assignedDepartment === "Ops" && task.department === "Operations"))
       : tasks;
-    const fallbackTasks = scopedTasks.length ? scopedTasks : tasks.filter((task) => task.department !== "Finance");
+    const fallbackTasks = scopedTasks.length ? scopedTasks : [];
     const visible = tab === "My Tasks" ? fallbackTasks.slice(0, 4) : fallbackTasks;
     return [
       { label: "Today", items: visible.filter((task) => task.status !== "Completed").slice(0, 3) },
       { label: "Tomorrow", items: visible.slice(2, 5) },
       { label: "Upcoming", items: visible.slice(4) },
     ];
-  }, [activeDepartment, isDepartmentView, tab]);
+  }, [assignedDepartment, isDepartmentView, tab]);
 
   return (
     <section className="space-y-4">
       <section className="space-y-3">
         <div>
           <h1 className="text-xl font-semibold">Requires Attention</h1>
-          <p className="text-sm text-neutral-600">{isDepartmentView ? `${activeDepartment} issues before the rest of the board` : "Fix these before managing the rest of the board"}</p>
+          <p className="text-sm text-neutral-600">{isDepartmentView ? `${departmentLabel} issues before the rest of your board` : "Fix these before managing the rest of the board"}</p>
         </div>
         <div className="space-y-2">
           {alerts.map((alert) => (

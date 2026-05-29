@@ -1,9 +1,8 @@
 "use client";
 
 import { AtSign, Bell, ChevronRight, ClipboardCheck, FileText, IndianRupee, Megaphone, MessageCircle, Mic2, Palette, Tent, UsersRound } from "lucide-react";
-import { departments, tasks } from "@/lib/mock-data";
+import { tasks } from "@/lib/mock-data";
 import { useAppStore } from "@/store/useAppStore";
-import { cn } from "@/lib/utils";
 
 const eventSpaces = [
   { title: "Speakers", icon: Mic2, unread: 3, pending: 1, tone: "bg-violet-100" },
@@ -27,17 +26,27 @@ const announcements = [
 const dms = ["Ava Roy", "Samira Khan", "Milan Shah"];
 
 const hodSpaces = [
-  { title: "Team Chat", icon: MessageCircle, detail: "5 unread updates", tone: "bg-sky-100" },
+  { title: "Creative Chat", icon: MessageCircle, detail: "5 unread updates", tone: "bg-sky-100" },
   { title: "Assigned Work", icon: ClipboardCheck, detail: "3 due today", tone: "bg-amber-100" },
-  { title: "Department Files", icon: FileText, detail: "Plans and assets", tone: "bg-violet-100" },
-  { title: "Announcements", icon: Megaphone, detail: "2 council notes", tone: "bg-emerald-100" },
+  { title: "Creative Files", icon: FileText, detail: "Posters, copy, assets", tone: "bg-violet-100" },
+  { title: "Dependency Threads", icon: Megaphone, detail: "PR and council requests", tone: "bg-emerald-100" },
 ];
 
 const hodAlerts = [
-  { title: "Lighting vendor confirmation pending", detail: "Council needs your final go-ahead before payment." },
-  { title: "Two members have unassigned shifts", detail: "Fill the evening coverage gap before standup." },
-  { title: "Poster asset requested by PR", detail: "Creative needs the final dimensions by 4 PM." },
+  { title: "Poster asset requested by PR", detail: "PR needs final square and story versions by 4 PM." },
+  { title: "Sponsor logo lockup pending", detail: "Council added a sponsor to the closing ceremony board." },
+  { title: "Two designs waiting for review", detail: "Approve or send changes before evening standup." },
 ];
+
+const crossTeamThreads = [
+  { title: "PR launch copy", detail: "Ryan Lee is added for poster caption dependency" },
+  { title: "Sponsor board approval", detail: "Council is added until the logo lockup is approved" },
+];
+
+const departmentNames: Record<string, string> = {
+  Creative: "Creatives",
+  Ops: "Operations",
+};
 
 function CouncilHome() {
   const activeEvent = useAppStore((state) => state.activeEvent);
@@ -111,10 +120,9 @@ function CouncilHome() {
 }
 
 function HodHome() {
-  const activeDepartment = useAppStore((state) => state.activeDepartment);
-  const setActiveDepartment = useAppStore((state) => state.setActiveDepartment);
-  const departmentOptions = departments.filter((department) => department.id !== "Finance");
-  const departmentTasks = tasks.filter((task) => task.department === activeDepartment || (activeDepartment === "Ops" && task.department === "Operations"));
+  const assignedDepartment = useAppStore((state) => state.assignedDepartment);
+  const departmentLabel = departmentNames[assignedDepartment] ?? assignedDepartment;
+  const departmentTasks = tasks.filter((task) => task.department === assignedDepartment || (assignedDepartment === "Ops" && task.department === "Operations"));
   const openTasks = departmentTasks.filter((task) => task.status !== "Completed");
   const blockers = departmentTasks.filter((task) => task.status === "Blocked" || task.priority === "Critical");
 
@@ -122,8 +130,8 @@ function HodHome() {
     <section className="space-y-6">
       <div className="rounded-[22px] bg-[#111111] p-4 text-white shadow-[0_18px_45px_-32px_rgba(17,17,17,0.8)]">
         <p className="text-xs text-white/60">Department HOD</p>
-        <h1 className="mt-1 text-[30px] font-semibold leading-tight">{activeDepartment} Department</h1>
-        <p className="mt-1 text-xs text-white/60">Yugaantar 2026 - department workspace</p>
+        <h1 className="mt-1 text-[30px] font-semibold leading-tight">{departmentLabel}</h1>
+        <p className="mt-1 text-xs text-white/60">Yugaantar 2026 - your department workspace</p>
         <div className="mt-4 grid grid-cols-3 gap-2">
           <div className="rounded-[14px] bg-white/10 p-3">
             <p className="text-xl font-semibold">{openTasks.length}</p>
@@ -140,25 +148,10 @@ function HodHome() {
         </div>
       </div>
 
-      <div className="scrollbar-none flex gap-2 overflow-x-auto pb-1">
-        {departmentOptions.map((department) => (
-          <button
-            key={department.id}
-            onClick={() => setActiveDepartment(department.id)}
-            className={cn(
-              "shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition",
-              activeDepartment === department.id ? "bg-[#111111] text-white" : "bg-white text-neutral-700",
-            )}
-          >
-            {department.name}
-          </button>
-        ))}
-      </div>
-
       <section className="space-y-3">
         <div>
           <h2 className="text-xl font-semibold">Needs HOD Attention</h2>
-          <p className="text-sm text-neutral-600">Department-level issues that need a lead decision</p>
+          <p className="text-sm text-neutral-600">Only items owned by {departmentLabel}</p>
         </div>
         <div className="space-y-2">
           {hodAlerts.map((alert) => (
@@ -176,7 +169,7 @@ function HodHome() {
       <section className="space-y-3">
         <div>
           <h2 className="text-xl font-semibold">Department Spaces</h2>
-          <p className="text-sm text-neutral-600">Same workflow for every non-finance department</p>
+          <p className="text-sm text-neutral-600">Your team, files, work, and cross-team dependencies</p>
         </div>
         <div className="grid grid-cols-2 gap-3">
           {hodSpaces.map((space) => {
@@ -191,6 +184,24 @@ function HodHome() {
               </button>
             );
           })}
+        </div>
+      </section>
+
+      <section className="space-y-3">
+        <div>
+          <h2 className="text-xl font-semibold">Dependency Threads</h2>
+          <p className="text-sm text-neutral-600">People from other teams only where this department depends on them</p>
+        </div>
+        <div className="space-y-2">
+          {crossTeamThreads.map((thread) => (
+            <button key={thread.title} className="flex w-full items-center justify-between gap-3 rounded-[18px] bg-white p-3 text-left shadow-sm">
+              <span className="min-w-0">
+                <span className="block truncate font-semibold">{thread.title}</span>
+                <span className="mt-0.5 block truncate text-sm text-neutral-600">{thread.detail}</span>
+              </span>
+              <ChevronRight className="h-5 w-5 shrink-0 text-neutral-500" />
+            </button>
+          ))}
         </div>
       </section>
 
