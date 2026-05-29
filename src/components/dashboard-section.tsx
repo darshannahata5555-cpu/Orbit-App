@@ -113,15 +113,11 @@ function HodHome() {
     { title: `${departmentLabel} Files`, icon: FileText, detail: "Plans, assets, and references", tone: "bg-violet-100" },
     { title: "Dependency Threads", icon: Megaphone, detail: "Only linked cross-team work", tone: "bg-emerald-100" },
   ];
-  const hodAlerts = [
-    { title: `${departmentLabel} review pending`, detail: "A decision is waiting for your approval before the team moves ahead." },
-    { title: `${departmentLabel} dependency open`, detail: "One linked thread includes council or another department for a specific dependency." },
-    { title: "Two updates need acknowledgement", detail: "Reply before the next department standup." },
-  ];
   const crossTeamThreads = [
     { title: `${departmentLabel} dependency with PR`, detail: "PR is added only for the launch-facing handoff." },
     { title: `${departmentLabel} approval with council`, detail: "Council is added only until the blocker is cleared." },
   ];
+  const departmentDms = ["Nina Patel", "Ryan Lee", "Samira Khan"];
 
   return (
     <section className="space-y-6">
@@ -144,24 +140,6 @@ function HodHome() {
           </div>
         </div>
       </div>
-
-      <section className="space-y-3">
-        <div>
-          <h2 className="text-xl font-semibold">Needs HOD Attention</h2>
-          <p className="text-sm text-neutral-600">Only items owned by {departmentLabel}</p>
-        </div>
-        <div className="space-y-2">
-          {hodAlerts.map((alert) => (
-            <button key={alert.title} className="flex w-full items-center justify-between gap-3 rounded-[18px] bg-white p-3 text-left shadow-[0_16px_36px_-32px_rgba(17,17,17,0.5)]">
-              <span className="min-w-0">
-                <span className="block truncate font-semibold">{alert.title}</span>
-                <span className="mt-0.5 block truncate text-sm text-neutral-600">{alert.detail}</span>
-              </span>
-              <ChevronRight className="h-5 w-5 shrink-0 text-neutral-500" />
-            </button>
-          ))}
-        </div>
-      </section>
 
       <section className="space-y-3">
         <div>
@@ -197,6 +175,21 @@ function HodHome() {
                 <span className="mt-0.5 block truncate text-sm text-neutral-600">{thread.detail}</span>
               </span>
               <ChevronRight className="h-5 w-5 shrink-0 text-neutral-500" />
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section className="space-y-3">
+        <div className="flex items-center gap-2">
+          <MessageCircle className="h-5 w-5" />
+          <h2 className="text-xl font-semibold">DMs</h2>
+        </div>
+        <div className="scrollbar-none flex gap-2 overflow-x-auto pb-1">
+          {departmentDms.map((name) => (
+            <button key={name} className="min-w-[132px] rounded-[16px] bg-white p-3 text-left shadow-sm">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#D8D8D6] text-xs font-semibold">{name.split(" ").map((part) => part[0]).join("")}</span>
+              <span className="mt-3 block text-sm font-semibold">{name}</span>
             </button>
           ))}
         </div>
