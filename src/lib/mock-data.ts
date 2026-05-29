@@ -82,8 +82,8 @@ type TeamGroup = {
 
 export const eventOptions = [
   {
-    id: "orbit-fest-2026",
-    name: "Orbit Fest 2026",
+    id: "yugaantar-2026",
+    name: "Yugaantar 2026",
     venue: "Campus Amphitheater",
     date: "May 14 - 18",
   },

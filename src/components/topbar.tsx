@@ -10,7 +10,7 @@ export function Topbar() {
   const setSection = useAppStore((state) => state.setSection);
   const toggleCommand = useAppStore((state) => state.toggleCommand);
 
-  const activeName = localEvents.find((event) => event.id === activeEvent)?.name ?? "Yugaantar";
+  const activeName = localEvents.find((event) => event.id === activeEvent)?.name ?? "Yugaantar 2026";
 
   return (
     <header className="sticky top-0 z-40 border-b border-black/5 bg-[#D8D8D6]/95 backdrop-blur-xl">
@@ -25,7 +25,7 @@ export function Topbar() {
           </span>
           <span className="min-w-0">
             <span className="flex items-center gap-1.5 text-[17px] font-bold leading-none text-[#111111]">
-              Yugaantar
+              Orbit
               <ChevronDown className="h-4 w-4" />
             </span>
             <span className="mt-1 block truncate text-xs font-medium text-neutral-600">{activeName} - {role}</span>

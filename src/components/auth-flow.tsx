@@ -10,7 +10,7 @@ function Brand() {
         <span className="h-3.5 w-3.5 rounded-sm bg-[#111111]" />
       </span>
       <div>
-        <p className="text-xl font-bold leading-none">Yugaantar</p>
+        <p className="text-xl font-bold leading-none">Orbit</p>
         <p className="mt-1 text-sm text-neutral-600">Event operations workspace</p>
       </div>
     </div>
@@ -37,7 +37,7 @@ export function AuthFlow() {
   const createMockEvent = () => {
     addEvent({
       id: `event-${generatedCode.toLowerCase()}`,
-      name: "New Yugaantar Event",
+      name: "New Event",
       venue: "Main Campus",
       date: "Upcoming",
       code: generatedCode,

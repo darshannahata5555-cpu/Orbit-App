@@ -39,9 +39,9 @@ export const useAppStore = create<AppState>((set) => ({
   authView: "Welcome",
   authenticated: false,
   role: "HOD",
-  activeEvent: "orbit-fest-2026",
+  activeEvent: "yugaantar-2026",
   localEvents: [
-    { id: "orbit-fest-2026", name: "Orbit Fest 2026", venue: "Campus Amphitheater", date: "May 14 - 18", code: "ORB-2026" },
+    { id: "yugaantar-2026", name: "Yugaantar 2026", venue: "Campus Amphitheater", date: "May 14 - 18", code: "YUG-2026" },
     { id: "hackday-sprint", name: "Campus Hack Day", venue: "Tech Hub", date: "June 4 - 5", code: "HACK-405" },
   ],
   commandOpen: false,

@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Yugaantar - event operations",
-  description: "Yugaantar is a mobile-first event operations workspace.",
+  title: "Orbit - event operations",
+  description: "Orbit is a mobile-first event operations workspace.",
 };
 
 export default function RootLayout({
