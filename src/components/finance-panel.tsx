@@ -10,6 +10,13 @@ const queue = [
   { label: "Completed Reimbursements", value: reimbursements.filter((item) => item.status === "Approved").length, icon: CheckCircle2 },
 ];
 
+const snapshot = [
+  { label: "Budget Used", value: "₹16.8K", tone: "bg-neutral-900 text-white" },
+  { label: "Budget Left", value: "₹18.2K", tone: "bg-emerald-100 text-emerald-800" },
+  { label: "Pending Bills", value: "₹7.5K", tone: "bg-amber-100 text-amber-900" },
+  { label: "Reimbursements", value: "₹4.2K", tone: "bg-sky-100 text-sky-800" },
+];
+
 const vendors = [
   { name: "Alpha Printing", amount: "₹8,400", status: "Awaiting payment" },
   { name: "Stage Masters", amount: "₹12,500", status: "Advance paid" },
@@ -41,6 +48,21 @@ export function FinancePanel() {
         </div>
       </div>
 
+      <section className="space-y-3">
+        <div>
+          <h2 className="text-[24px] font-semibold">Quick Snapshot</h2>
+          <p className="text-sm text-neutral-600">Finance health in one glance</p>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          {snapshot.map((item) => (
+            <div key={item.label} className={`rounded-[18px] p-4 ${item.tone}`}>
+              <p className="text-sm opacity-75">{item.label}</p>
+              <p className="mt-3 text-2xl font-semibold">{item.value}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <div className="space-y-4">
         {queue.map((item) => {
           const Icon = item.icon;
@@ -59,7 +81,7 @@ export function FinancePanel() {
                     {tasks.slice(0, 2).map((task) => (
                       <div key={`${item.label}-${task.id}`} className="flex items-center gap-2 text-sm text-neutral-600">
                         <span className="h-3 w-3 rounded bg-[#D8D8D6]" />
-                        <span className="truncate">{task.department} · {task.title}</span>
+                        <span className="truncate">{task.department} - {task.title}</span>
                       </div>
                     ))}
                   </div>
