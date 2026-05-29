@@ -18,6 +18,7 @@ interface AppState {
   authenticated: boolean;
   role: Role;
   activeEvent: string;
+  activeDepartment: string;
   localEvents: LocalEvent[];
   commandOpen: boolean;
   mobileNavOpen: boolean;
@@ -27,6 +28,7 @@ interface AppState {
   signOut: () => void;
   setRole: (role: Role) => void;
   setActiveEvent: (eventId: string) => void;
+  setActiveDepartment: (department: string) => void;
   addEvent: (event: LocalEvent) => void;
   toggleCommand: () => void;
   closeCommand: () => void;
@@ -40,6 +42,7 @@ export const useAppStore = create<AppState>((set) => ({
   authenticated: false,
   role: "HOD",
   activeEvent: "yugaantar-2026",
+  activeDepartment: "Tech",
   localEvents: [
     { id: "yugaantar-2026", name: "Yugaantar 2026", venue: "Campus Amphitheater", date: "May 14 - 18", code: "YUG-2026" },
     { id: "hackday-sprint", name: "Campus Hack Day", venue: "Tech Hub", date: "June 4 - 5", code: "HACK-405" },
@@ -52,6 +55,7 @@ export const useAppStore = create<AppState>((set) => ({
   signOut: () => set({ authenticated: false, authView: "Welcome", section: "Dashboard" }),
   setRole: (role) => set({ role }),
   setActiveEvent: (activeEvent) => set({ activeEvent }),
+  setActiveDepartment: (activeDepartment) => set({ activeDepartment }),
   addEvent: (event) => set((state) => ({ localEvents: [event, ...state.localEvents], activeEvent: event.id, authenticated: true, section: "Dashboard" })),
   toggleCommand: () => set((state) => ({ commandOpen: !state.commandOpen })),
   closeCommand: () => set({ commandOpen: false }),
