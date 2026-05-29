@@ -117,7 +117,11 @@ function HodHome() {
     { title: `${departmentLabel} dependency with PR`, detail: "PR is added only for the launch-facing handoff." },
     { title: `${departmentLabel} approval with council`, detail: "Council is added only until the blocker is cleared." },
   ];
-  const departmentDms = ["Nina Patel", "Ryan Lee", "Samira Khan"];
+  const departmentDms = [
+    { name: "Nina Patel", message: "Final poster version is ready for review.", time: "9:42 AM", unread: 2 },
+    { name: "Ryan Lee", message: "Need the launch caption before PR pushes it.", time: "9:18 AM", unread: 1 },
+    { name: "Samira Khan", message: "Council approved the sponsor board dependency.", time: "Yesterday", unread: 0 },
+  ];
 
   return (
     <section className="space-y-6">
@@ -185,11 +189,24 @@ function HodHome() {
           <MessageCircle className="h-5 w-5" />
           <h2 className="text-xl font-semibold">DMs</h2>
         </div>
-        <div className="grid grid-cols-3 gap-2">
-          {departmentDms.map((name) => (
-            <button key={name} className="min-w-0 rounded-[16px] bg-white p-3 text-left shadow-sm">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#D8D8D6] text-xs font-semibold">{name.split(" ").map((part) => part[0]).join("")}</span>
-              <span className="mt-3 block truncate text-sm font-semibold">{name}</span>
+        <div className="space-y-2">
+          {departmentDms.map((dm) => (
+            <button key={dm.name} className="flex w-full items-center gap-3 rounded-[18px] bg-white p-3 text-left shadow-sm">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#D8D8D6] text-sm font-semibold">
+                {dm.name.split(" ").map((part) => part[0]).join("")}
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="flex items-center justify-between gap-3">
+                  <span className="truncate font-semibold">{dm.name}</span>
+                  <span className="shrink-0 text-xs text-neutral-500">{dm.time}</span>
+                </span>
+                <span className="mt-0.5 block truncate text-sm text-neutral-600">{dm.message}</span>
+              </span>
+              {dm.unread > 0 && (
+                <span className="flex h-6 min-w-6 shrink-0 items-center justify-center rounded-full bg-[#111111] px-2 text-xs font-semibold text-white">
+                  {dm.unread}
+                </span>
+              )}
             </button>
           ))}
         </div>
