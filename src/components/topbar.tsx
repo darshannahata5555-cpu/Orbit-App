@@ -7,10 +7,13 @@ export function Topbar() {
   const activeEvent = useAppStore((state) => state.activeEvent);
   const localEvents = useAppStore((state) => state.localEvents);
   const role = useAppStore((state) => state.role);
+  const assignedDepartment = useAppStore((state) => state.assignedDepartment);
   const setSection = useAppStore((state) => state.setSection);
   const toggleCommand = useAppStore((state) => state.toggleCommand);
 
   const activeName = localEvents.find((event) => event.id === activeEvent)?.name ?? "Yugaantar 2026";
+  const departmentLabel = assignedDepartment === "Creative" ? "Creatives" : assignedDepartment === "Ops" ? "Operations" : assignedDepartment;
+  const accessLabel = role === "HOD" || role === "Core Member" || role === "Member" ? `${departmentLabel} - ${role}` : role;
 
   return (
     <header className="sticky top-0 z-40 border-b border-black/5 bg-[#D8D8D6]/95 backdrop-blur-xl">
@@ -28,7 +31,7 @@ export function Topbar() {
               Orbit
               <ChevronDown className="h-4 w-4" />
             </span>
-            <span className="mt-1 block truncate text-xs font-medium text-neutral-600">{activeName} - {role}</span>
+            <span className="mt-1 block truncate text-xs font-medium text-neutral-600">{activeName} - {accessLabel}</span>
           </span>
         </button>
 

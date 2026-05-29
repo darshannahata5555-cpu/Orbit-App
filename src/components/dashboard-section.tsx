@@ -25,24 +25,6 @@ const announcements = [
 
 const dms = ["Ava Roy", "Samira Khan", "Milan Shah"];
 
-const hodSpaces = [
-  { title: "Creative Chat", icon: MessageCircle, detail: "5 unread updates", tone: "bg-sky-100" },
-  { title: "Assigned Work", icon: ClipboardCheck, detail: "3 due today", tone: "bg-amber-100" },
-  { title: "Creative Files", icon: FileText, detail: "Posters, copy, assets", tone: "bg-violet-100" },
-  { title: "Dependency Threads", icon: Megaphone, detail: "PR and council requests", tone: "bg-emerald-100" },
-];
-
-const hodAlerts = [
-  { title: "Poster asset requested by PR", detail: "PR needs final square and story versions by 4 PM." },
-  { title: "Sponsor logo lockup pending", detail: "Council added a sponsor to the closing ceremony board." },
-  { title: "Two designs waiting for review", detail: "Approve or send changes before evening standup." },
-];
-
-const crossTeamThreads = [
-  { title: "PR launch copy", detail: "Ryan Lee is added for poster caption dependency" },
-  { title: "Sponsor board approval", detail: "Council is added until the logo lockup is approved" },
-];
-
 const departmentNames: Record<string, string> = {
   Creative: "Creatives",
   Ops: "Operations",
@@ -125,6 +107,21 @@ function HodHome() {
   const departmentTasks = tasks.filter((task) => task.department === assignedDepartment || (assignedDepartment === "Ops" && task.department === "Operations"));
   const openTasks = departmentTasks.filter((task) => task.status !== "Completed");
   const blockers = departmentTasks.filter((task) => task.status === "Blocked" || task.priority === "Critical");
+  const hodSpaces = [
+    { title: `${departmentLabel} Chat`, icon: MessageCircle, detail: "5 unread updates", tone: "bg-sky-100" },
+    { title: "Assigned Work", icon: ClipboardCheck, detail: "3 due today", tone: "bg-amber-100" },
+    { title: `${departmentLabel} Files`, icon: FileText, detail: "Plans, assets, and references", tone: "bg-violet-100" },
+    { title: "Dependency Threads", icon: Megaphone, detail: "Only linked cross-team work", tone: "bg-emerald-100" },
+  ];
+  const hodAlerts = [
+    { title: `${departmentLabel} review pending`, detail: "A decision is waiting for your approval before the team moves ahead." },
+    { title: `${departmentLabel} dependency open`, detail: "One linked thread includes council or another department for a specific dependency." },
+    { title: "Two updates need acknowledgement", detail: "Reply before the next department standup." },
+  ];
+  const crossTeamThreads = [
+    { title: `${departmentLabel} dependency with PR`, detail: "PR is added only for the launch-facing handoff." },
+    { title: `${departmentLabel} approval with council`, detail: "Council is added only until the blocker is cleared." },
+  ];
 
   return (
     <section className="space-y-6">

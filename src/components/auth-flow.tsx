@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { ArrowRight, CheckCircle2, Mail, Plus, UserRound } from "lucide-react";
+import { departments, type Role } from "@/lib/mock-data";
 import { useAppStore } from "@/store/useAppStore";
 
 function Brand() {
@@ -27,12 +29,17 @@ function Field({ label, placeholder, type = "text" }: { label: string; placehold
 }
 
 export function AuthFlow() {
+  const [loginRole, setLoginRole] = useState<Extract<Role, "Council" | "HOD">>("HOD");
+  const [loginDepartment, setLoginDepartment] = useState("Creative");
   const authView = useAppStore((state) => state.authView);
   const setAuthView = useAppStore((state) => state.setAuthView);
   const enterApp = useAppStore((state) => state.enterApp);
   const addEvent = useAppStore((state) => state.addEvent);
+  const setRole = useAppStore((state) => state.setRole);
+  const setAssignedDepartment = useAppStore((state) => state.setAssignedDepartment);
   const eventCount = useAppStore((state) => state.localEvents.length);
   const generatedCode = `YUG-${String(eventCount + 1).padStart(4, "0")}`;
+  const hodDepartments = departments.filter((department) => department.id !== "Finance");
 
   const createMockEvent = () => {
     addEvent({
@@ -42,6 +49,14 @@ export function AuthFlow() {
       date: "Upcoming",
       code: generatedCode,
     });
+  };
+
+  const enterWorkspace = () => {
+    setRole(loginRole);
+    if (loginRole === "HOD") {
+      setAssignedDepartment(loginDepartment);
+    }
+    enterApp();
   };
 
   return (
@@ -96,11 +111,41 @@ export function AuthFlow() {
             <section className="space-y-5">
               <div>
                 <h1 className="text-[30px] font-semibold">Login</h1>
-                <p className="mt-2 text-sm leading-6 text-neutral-600">Use the email approved by your event creator or council.</p>
+                <p className="mt-2 text-sm leading-6 text-neutral-600">Choose your event access. Council sees all departments. HODs only see their own department.</p>
               </div>
               <Field label="Email ID" placeholder="name@example.com" type="email" />
               <Field label="Event code" placeholder="Example: ORB-2026" />
-              <button onClick={enterApp} className="flex h-14 w-full items-center justify-center rounded-[18px] bg-[#111111] font-semibold text-white">Enter workspace</button>
+              <div className="space-y-3">
+                <p className="text-sm font-medium text-neutral-600">Access type</p>
+                <div className="grid grid-cols-2 gap-2">
+                  {(["HOD", "Council"] as const).map((role) => (
+                    <button
+                      key={role}
+                      onClick={() => setLoginRole(role)}
+                      className={`h-12 rounded-[16px] text-sm font-semibold transition ${loginRole === role ? "bg-[#111111] text-white" : "bg-white text-neutral-700"}`}
+                    >
+                      {role}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {loginRole === "HOD" && (
+                <div className="space-y-3">
+                  <p className="text-sm font-medium text-neutral-600">Your department</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {hodDepartments.map((department) => (
+                      <button
+                        key={department.id}
+                        onClick={() => setLoginDepartment(department.id)}
+                        className={`h-12 rounded-[16px] text-sm font-semibold transition ${loginDepartment === department.id ? "bg-[#111111] text-white" : "bg-white text-neutral-700"}`}
+                      >
+                        {department.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+              <button onClick={enterWorkspace} className="flex h-14 w-full items-center justify-center rounded-[18px] bg-[#111111] font-semibold text-white">Enter workspace</button>
               <button onClick={() => setAuthView("Welcome")} className="w-full py-2 text-sm font-medium text-neutral-600">Back</button>
             </section>
           )}

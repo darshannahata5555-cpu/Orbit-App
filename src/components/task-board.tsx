@@ -27,6 +27,12 @@ export function TaskBoard() {
   const assignedDepartment = useAppStore((state) => state.assignedDepartment);
   const isDepartmentView = role === "HOD" || role === "Core Member" || role === "Member";
   const departmentLabel = assignedDepartment === "Creative" ? "Creatives" : assignedDepartment === "Ops" ? "Operations" : assignedDepartment;
+  const visibleAlerts = isDepartmentView
+    ? [
+        { title: `${departmentLabel} blocker needs review`, detail: "This only appears for your assigned department." },
+        { title: `${departmentLabel} dependency thread is open`, detail: "A person from another team is added only for this dependency." },
+      ]
+    : alerts;
 
   const groups = useMemo(() => {
     const scopedTasks = isDepartmentView
@@ -49,7 +55,7 @@ export function TaskBoard() {
           <p className="text-sm text-neutral-600">{isDepartmentView ? `${departmentLabel} issues before the rest of your board` : "Fix these before managing the rest of the board"}</p>
         </div>
         <div className="space-y-2">
-          {alerts.map((alert) => (
+          {visibleAlerts.map((alert) => (
             <button key={alert.title} className="flex w-full items-start gap-3 rounded-[18px] border border-rose-200 bg-rose-50 p-3 text-left text-rose-900">
               <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" />
               <span className="min-w-0">
