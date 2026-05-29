@@ -1,11 +1,17 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { CalendarDays, CheckCircle2, Circle, MessageSquare, UserRound } from "lucide-react";
+import { AlertTriangle, CalendarDays, CheckCircle2, Circle, MessageSquare, UserRound } from "lucide-react";
 import { tasks } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 
 const tabs = ["My Tasks", "Team Tasks"] as const;
+
+const alerts = [
+  { title: "Tech has 4 blockers", detail: "Sound check and lighting vendor confirmations are behind plan." },
+  { title: "Speaker pickup delayed", detail: "Hospitality needs backup vehicle confirmation before 5:30 PM." },
+  { title: "2 approvals pending", detail: "Stage Masters advance and printing bill need council signoff." },
+];
 
 const priorityStyles = {
   Critical: "bg-rose-100 text-rose-700",
@@ -28,6 +34,24 @@ export function TaskBoard() {
 
   return (
     <section className="space-y-4">
+      <section className="space-y-3">
+        <div>
+          <h1 className="text-xl font-semibold">Requires Attention</h1>
+          <p className="text-sm text-neutral-600">Fix these before managing the rest of the board</p>
+        </div>
+        <div className="space-y-2">
+          {alerts.map((alert) => (
+            <button key={alert.title} className="flex w-full items-start gap-3 rounded-[18px] border border-rose-200 bg-rose-50 p-3 text-left text-rose-900">
+              <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" />
+              <span className="min-w-0">
+                <span className="block font-semibold">{alert.title}</span>
+                <span className="mt-0.5 block text-sm opacity-80">{alert.detail}</span>
+              </span>
+            </button>
+          ))}
+        </div>
+      </section>
+
       <div className="flex items-center gap-6">
         {tabs.map((item) => (
           <button
