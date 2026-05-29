@@ -7,6 +7,13 @@ import { cn } from "@/lib/utils";
 
 const tabs = ["My Tasks", "Team Tasks"] as const;
 
+const priorityStyles = {
+  Critical: "bg-rose-100 text-rose-700",
+  High: "bg-amber-100 text-amber-800",
+  Medium: "bg-sky-100 text-sky-700",
+  Low: "bg-emerald-100 text-emerald-700",
+} as const;
+
 export function TaskBoard() {
   const [tab, setTab] = useState<(typeof tabs)[number]>("My Tasks");
 
@@ -55,8 +62,10 @@ export function TaskBoard() {
                           <p className="mt-1 text-sm leading-5 text-neutral-600">{task.description}</p>
                         </div>
                       </div>
+                      <span className={cn("shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold", priorityStyles[task.priority])}>{task.priority}</span>
                     </div>
                     <div className="mt-4 flex flex-wrap gap-2 text-xs text-neutral-600">
+                      <span className="rounded-full bg-[#111111] px-2.5 py-1 font-semibold text-white">{task.department}</span>
                       <span className="inline-flex items-center gap-1 rounded-full bg-neutral-100 px-2.5 py-1"><UserRound className="h-3.5 w-3.5" /> {task.assignee}</span>
                       <span className="inline-flex items-center gap-1 rounded-full bg-neutral-100 px-2.5 py-1"><CalendarDays className="h-3.5 w-3.5" /> {task.dueDate}</span>
                       <span className="inline-flex items-center gap-1 rounded-full bg-neutral-100 px-2.5 py-1"><MessageSquare className="h-3.5 w-3.5" /> {task.comments}</span>

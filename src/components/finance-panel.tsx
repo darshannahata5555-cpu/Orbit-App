@@ -10,6 +10,13 @@ const queue = [
   { label: "Completed Reimbursements", value: reimbursements.filter((item) => item.status === "Approved").length, icon: CheckCircle2 },
 ];
 
+const vendors = [
+  { name: "Alpha Printing", amount: "₹8,400", status: "Awaiting payment" },
+  { name: "Stage Masters", amount: "₹12,500", status: "Advance paid" },
+  { name: "Catering Hub", amount: "₹9,800", status: "Pending invoice" },
+  { name: "Campus Cafe", amount: "₹840", status: "Approval pending" },
+];
+
 export function FinancePanel() {
   const setSection = useAppStore((state) => state.setSection);
 
@@ -70,6 +77,24 @@ export function FinancePanel() {
         <Plus className="h-5 w-5" />
         Create New Entry
       </button>
+
+      <section className="space-y-3">
+        <div>
+          <h2 className="text-[24px] font-semibold">Vendor Ledger</h2>
+          <p className="text-sm text-neutral-600">Payments and invoice status by vendor</p>
+        </div>
+        <div className="overflow-hidden rounded-[24px] bg-white shadow-[0_16px_36px_-32px_rgba(17,17,17,0.5)]">
+          {vendors.map((vendor) => (
+            <div key={vendor.name} className="grid grid-cols-[1fr_auto] gap-3 border-b border-black/5 p-4 last:border-b-0">
+              <div className="min-w-0">
+                <p className="truncate font-semibold">{vendor.name}</p>
+                <p className="mt-1 text-sm text-neutral-600">{vendor.status}</p>
+              </div>
+              <p className="font-semibold">{vendor.amount}</p>
+            </div>
+          ))}
+        </div>
+      </section>
     </section>
   );
 }
