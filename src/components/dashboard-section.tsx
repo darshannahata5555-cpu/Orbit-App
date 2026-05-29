@@ -35,7 +35,7 @@ const groups = [
 export function DashboardSection() {
   return (
     <section className="space-y-7">
-      <div className="flex gap-3 overflow-x-auto pb-1">
+      <div className="scrollbar-none flex gap-3 overflow-x-auto pb-1">
         {shortcuts.map((item) => {
           const Icon = item.icon;
           return (
